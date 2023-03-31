@@ -12,6 +12,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       home: ShopListScreen(),
     );
   }
@@ -27,29 +28,54 @@ class ShopListScreen extends StatefulWidget {
 class _ShopListScreenState extends State<ShopListScreen> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          shopsList.add({'name':'name', 'requirements':[]});
-          setState(() {
+    final TextEditingController shopName = TextEditingController();
 
-          });
-        },
+    return Scaffold(
+      appBar: AppBar(),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () => showModalBottomSheet(
+          context: context,
+          builder: (context) => Container(
+            child: Column(
+              children: [
+                TextField(
+                  controller: shopName,
+                ),
+                ElevatedButton(
+                    onPressed: () {
+                      shopsList.add({
+                        'name': shopName.text,
+                        'requirements': [],
+                      });
+                      setState(() {});
+
+                      Navigator.pop(context);
+                    },
+                    child: Text('add')),
+              ],
+            ),
+          ),
+        ),
         child: Icon(Icons.add),
       ),
-      body: Container(
-        child: ListView.builder(
-          itemCount: shopsList.length,
-          itemBuilder: (context, index) => GestureDetector(
-              onTap: () {
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) =>
-                          AddRequirementsScreen(shopIndex: index),
-                    ));
-              },
-              child: Center(child: Text(shopsList[index]['name']))),
+      body: ListView.builder(
+        itemCount: shopsList.length,
+        itemBuilder: (context, index) => SizedBox(
+          height: 120,
+          child: GestureDetector(
+            onTap: () {
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) =>
+                        AddRequirementsScreen(shopIndex: index),
+                  ));
+            },
+            child: Card(
+                color: Colors.green,
+                margin: EdgeInsets.symmetric(vertical: 10, horizontal: 20),
+                child: Center(child: Text(shopsList[index]['name']))),
+          ),
         ),
       ),
     );

@@ -4,11 +4,11 @@ List shopsList = [
     'Requirements': [
       {
         'name': 'name0',
-        'qty': 3,
+        'qty': 1,
         'rate': 500,
       },   {
         'name': 'name1',
-        'qty': 3,
+        'qty': 1,
         'rate': 500,
       },
     ]
@@ -18,7 +18,7 @@ List shopsList = [
     'Requirements': [
       {
         'name': 'name',
-        'qty': 3,
+        'qty': 1,
         'rate': 500,
       },
     ]

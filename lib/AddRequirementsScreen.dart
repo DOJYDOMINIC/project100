@@ -13,42 +13,69 @@ class AddRequirementsScreen extends StatefulWidget {
 class _AddRequirementsScreenState extends State<AddRequirementsScreen> {
   @override
   Widget build(BuildContext context) {
-    List requirementsList = shopsList[widget.shopIndex]['Requirements'];
+    final TextEditingController itemName = TextEditingController();
+    final TextEditingController itemQty = TextEditingController();
+    final TextEditingController itemRate = TextEditingController();
+
+
+
+    List? requirementsList = shopsList[widget.shopIndex]['Requirements'] ;
     return Scaffold(
         floatingActionButton: FloatingActionButton(
           onPressed: () => showModalBottomSheet(
             context: context,
             builder: (context) => Container(
-              child: ElevatedButton(
-                  onPressed: () {
-                    requirementsList.add({
-                      'name': 'name1',
-                      'qty': 3,
-                      'rate': 500,
-                    });
-                    setState(() {});
-                    Navigator.pop(context);
-                  },
-                  child: Text('add')),
+              child: Column(
+                children: [
+                  TextField(
+                    controller: itemName,
+                  ),
+                  TextField(
+                    keyboardType: TextInputType.number,
+                    controller: itemQty,
+                  ),
+                  TextField(
+                    keyboardType: TextInputType.number,
+                    controller: itemRate,
+                  ),
+                  ElevatedButton(
+                      onPressed: () {
+                        if(requirementsList == null){
+                          requirementsList = [];
+                        }
+                        requirementsList!.add({
+                          'name': itemName.text,
+                          'qty': double.parse(itemQty.text),
+                          'rate': double.parse(itemRate.text),
+                        });
+                        setState(() {});
+                        Navigator.pop(context);
+                      },
+                      child: Text('add')),
+                ],
+              ),
             ),
           ),
           child: Icon(Icons.add),
         ),
-        body: Center(
+        body: requirementsList == null ? Center(child: Text('Add items'),) : Center(
           child: ListView.builder(
-            itemCount: requirementsList.length,
-            itemBuilder: (context, index) => ListTile(
-              leading: Text(
-                requirementsList[index]['name'],
-              ),
-              title: Text(
-                requirementsList[index]['qty'].toString(),
-              ),
-              trailing: Text(
-                '${requirementsList[index]['qty'] * requirementsList[index]['rate']}',
-              ),
-            ),
-          ),
+              itemCount: requirementsList == null ? 0 :requirementsList!.length ,
+              itemBuilder: (context, index) {
+
+                num totalItemRate = requirementsList![index]['qty'] * requirementsList![index]['rate'];
+                return ListTile(
+                  leading: Text(
+                    requirementsList![index]['name'] ,
+                  ),
+                  title: Text(
+                    requirementsList![index]['qty'].toString(),
+                  ),
+                  trailing: Text(
+                    '$totalItemRate' ,
+                  ),
+                );
+              }),
         ));
   }
 }
