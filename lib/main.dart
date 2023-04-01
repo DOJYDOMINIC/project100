@@ -34,6 +34,7 @@ class _ShopListScreenState extends State<ShopListScreen> {
 
     return SafeArea(
       child: Scaffold(
+        backgroundColor: back_color,
         floatingActionButton: FloatingActionButton(
           backgroundColor: main_color,
           onPressed: () => showModalBottomSheet(
@@ -67,7 +68,7 @@ class _ShopListScreenState extends State<ShopListScreen> {
             SliverAppBar(
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.vertical(
-                  bottom: Radius.circular(30),
+                  bottom: Radius.circular(0),
                 ),
               ),
               // snap: false,
@@ -89,7 +90,7 @@ class _ShopListScreenState extends State<ShopListScreen> {
                         image: AssetImage('assets/images/relaxed.jpg'))),
                   ) //Images.network
               ), //FlexibleSpaceBar
-              expandedHeight: 220,
+              expandedHeight: 200,
               backgroundColor: main_color,
               leading: IconButton(
                 icon: Icon(Icons.menu),
@@ -127,7 +128,8 @@ class _ShopListScreenState extends State<ShopListScreen> {
                       },
                       child: Container(
                         decoration:BoxDecoration(
-                            color: Colors.grey.shade300,
+                          border: Border.all(color: Colors.white54,width: 5),
+                            color: Colors.transparent,
                             borderRadius: BorderRadius.all(Radius.circular(20))),
                         margin: EdgeInsets.symmetric(
                           vertical: 10,
@@ -136,9 +138,8 @@ class _ShopListScreenState extends State<ShopListScreen> {
                         child: Center(
                           child: ListTile(
                             leading: Image.asset('assets/images/shop.png'),
-                            title: Text(shopsList[index]['name']),
-                      //       trailing: Text(
-                      // '$totalItemRate' ,style: TextStyle(fontSize: 20) ,
+                            title: Text(shopsList[index]['name'],style: comnfnt,),
+                            subtitle: Text('Detail',style: subtitle,),
                           ),
                         ),
                       ),

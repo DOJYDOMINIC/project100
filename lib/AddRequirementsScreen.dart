@@ -1,4 +1,5 @@
 
+
 import 'package:flutter/material.dart';
 import 'package:project100/shop_model.dart';
 
@@ -24,6 +25,17 @@ class _AddRequirementsScreenState extends State<AddRequirementsScreen> {
 
     List? requirementsList = shopsList[widget.shopIndex]['Requirements'] ;
     return Scaffold(
+      backgroundColor: back_color,
+      appBar: AppBar(
+        centerTitle: true,
+        title: Text('Item List'),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.vertical(
+            bottom: Radius.circular(30),
+          ),
+        ),
+        backgroundColor: main_color,
+      ),
         floatingActionButton: FloatingActionButton(
           backgroundColor: main_color,
           onPressed: () => showModalBottomSheet(
@@ -63,32 +75,31 @@ class _AddRequirementsScreenState extends State<AddRequirementsScreen> {
           child: Icon(Icons.add),
         ),
         body: requirementsList == null ? Center(child: Text('Add items'),) : Center(
-          child: ListView.builder(
-              itemCount:requirementsList!.length ,
-              itemBuilder: (context, index) {
-                num totalItemRate = requirementsList![index]['qty'] * requirementsList![index]['rate'];
-                return SizedBox(
-                  height: 80,
-                  child: Card(
-                    color: Colors.white,
-                    elevation: 5,
-                    child: ListTile(
-                      leading: Padding(
-                        padding: const EdgeInsets.only(right: 50),
-                        child: Text(
-                          requirementsList![index]['name'],style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold) ,
+          child: Padding(
+            padding: const EdgeInsets.only(top: 20),
+            child: ListView.builder(
+                itemCount:requirementsList!.length ,
+                itemBuilder: (context, index) {
+                  num totalItemRate = requirementsList![index]['qty'] * requirementsList![index]['rate'];
+                  return SizedBox(
+                    height: 80,
+                    child: Card(
+                      color: Colors.transparent,
+                      child: ListTile(
+                        leading: Text(
+                          requirementsList![index]['name'],style: comnfnt,
+                        ),
+                        title: Text(
+                          requirementsList![index]['qty'].toString(),style: comnfnt
+                        ),
+                        trailing: Text(
+                          '$totalItemRate' ,style: comnfnt) ,
                         ),
                       ),
-                      title: Text(
-                        requirementsList![index]['qty'].toString(),style: TextStyle(fontSize: 20) ,
-                      ),
-                      trailing: Text(
-                        '$totalItemRate' ,style: TextStyle(fontSize: 20) ,
-                      ),
-                    ),
-                  ),
-                );
-              }),
+
+                  );
+                }),
+          ),
         ));
   }
 }
